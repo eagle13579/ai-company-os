@@ -1,0 +1,21 @@
+{
+  "name": "ai-company-os",
+  "version": "1.0.0",
+  "description": "基于AI技术的数字化组织管理平台",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eagle13579/ai-company-os.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/eagle13579/ai-company-os/issues"
+  },
+  "homepage": "https://github.com/eagle13579/ai-company-os#readme"
+}
