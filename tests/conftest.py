@@ -1,10 +1,11 @@
 import pytest
-from app.database import Base, get_db
 from fastapi.testclient import TestClient
-from main import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
+
+from app.database import Base, get_db
+from main import app
 
 # 创建内存数据库
 SQLALCHEMY_DATABASE_URL = "sqlite:///./test.db"
@@ -14,9 +15,7 @@ engine = create_engine(
     connect_args={"check_same_thread": False},
     poolclass=StaticPool,
 )
-TestingSessionLocal = sessionmaker(
-    autocommit=False, autoflush=False, bind=engine
-)
+TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 
 @pytest.fixture(scope="function")

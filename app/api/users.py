@@ -1,18 +1,17 @@
+from fastapi import APIRouter, Depends, Header, HTTPException
+from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models.user import User
 from app.schemas.user import UserCreate, UserResponse, UserUpdate
 from app.services.auth import auth_service
 from app.services.cache import cache_service
-from fastapi import APIRouter, Depends, Header, HTTPException
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
 
 # 依赖项：获取当前用户
-def get_current_user(
-    authorization: str = Header(...), db: Session = Depends(get_db)
-):
+def get_current_user(authorization: str = Header(...), db: Session = Depends(get_db)):
     """获取当前用户"""
     try:
         token = authorization.split(" ")[1]
@@ -27,9 +26,7 @@ def get_current_user(
             raise HTTPException(status_code=404, detail="User not found")
         return user
     except Exception:
-        raise HTTPException(
-            status_code=401, detail="Could not validate credentials"
-        )
+        raise HTTPException(status_code=401, detail="Could not validate credentials")
 
 
 @router.get("/", response_model=list[UserResponse])
@@ -45,9 +42,7 @@ def get_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     # 转换为响应模型并缓存
     user_responses = [UserResponse.model_validate(user) for user in users]
-    cache_service.set(
-        cache_key, [user.model_dump() for user in user_responses]
-    )
+    cache_service.set(cache_key, [user.model_dump() for user in user_responses])
 
     return user_responses
 
@@ -105,9 +100,7 @@ def update_user(user_id: int, user: UserUpdate, db: Session = Depends(get_db)):
     # 更新用户信息
     for key, value in user.model_dump(exclude_unset=True).items():
         if key == "password":
-            setattr(
-                db_user, "password_hash", auth_service.get_password_hash(value)
-            )
+            setattr(db_user, "password_hash", auth_service.get_password_hash(value))
         else:
             setattr(db_user, key, value)
 
@@ -143,22 +136,13 @@ def login(user: UserCreate, db: Session = Depends(get_db)):
     # 查找用户
     db_user = db.query(User).filter(User.email == user.email).first()
     if not db_user:
-        raise HTTPException(
-            status_code=401, detail="Incorrect email or password"
-        )
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
 
     # 验证密码
     if not auth_service.verify_password(user.password, str(db_user.password_hash)):
-        raise HTTPException(
-            status_code=401, detail="Incorrect email or password"
-        )
+        raise HTTPException(status_code=401, detail="Incorrect email or password")
 
     # 创建访问令牌
-    access_token = auth_service.create_access_token(
-        data={"sub": str(db_user.id)}
-    )
+    access_token = auth_service.create_access_token(data={"sub": str(db_user.id)})
 
-    return {
-        "access_token": access_token,
-        "token_type": "bearer"
-    }
+    return {"access_token": access_token, "token_type": "bearer"}

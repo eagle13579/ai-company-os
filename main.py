@@ -1,15 +1,12 @@
-from app.api import items, users
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
+from app.api import items, users
 
 # 创建数据库表
 # Base.metadata.create_all(bind=engine)
 
-app = FastAPI(
-    title="AI Company OS API",
-    description="AI 数字公司操作系统 API",
-    version="1.0.0"
-)
+app = FastAPI(title="AI Company OS API", description="AI 数字公司操作系统 API", version="1.0.0")
 
 # 配置 CORS
 app.add_middleware(
@@ -40,8 +37,4 @@ def health_check():
 def metrics():
     # 这里可以添加实际的指标收集逻辑
     # 例如请求计数、响应时间等
-    return {
-        "requests_total": 100,
-        "response_time_seconds": 0.1,
-        "uptime_seconds": 3600
-    }
+    return {"requests_total": 100, "response_time_seconds": 0.1, "uptime_seconds": 3600}

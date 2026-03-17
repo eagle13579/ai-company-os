@@ -27,9 +27,7 @@ class CacheService:
     def set(self, key: str, value: Any, expire: int = 3600) -> bool:
         """设置缓存值"""
         try:
-            self.redis_client.setex(
-                key, expire, json.dumps(value, ensure_ascii=False)
-            )
+            self.redis_client.setex(key, expire, json.dumps(value, ensure_ascii=False))
             return True
         except Exception as e:
             print(f"设置缓存失败: {e}")

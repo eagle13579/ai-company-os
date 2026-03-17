@@ -10,15 +10,12 @@ load_dotenv()
 
 # 数据库连接配置
 DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://postgres:DY5545782kkz@localhost:5432/ai_company_os"
+    "DATABASE_URL", "postgresql://postgres:DY5545782kkz@localhost:5432/ai_company_os"
 )
 
 # 创建数据库引擎
 engine = create_engine(
-    DATABASE_URL,
-    echo=True,
-    connect_args={"options": "-c client_encoding=utf8"}
+    DATABASE_URL, echo=True, connect_args={"options": "-c client_encoding=utf8"}
 )
 
 # 创建会话工厂

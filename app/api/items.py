@@ -1,9 +1,10 @@
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+
 from app.database import get_db
 from app.models.item import Item
 from app.schemas.item import ItemCreate, ItemResponse, ItemUpdate
 from app.services.cache import cache_service
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -21,9 +22,7 @@ def get_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
 
     # 转换为响应模型并缓存
     item_responses = [ItemResponse.model_validate(item) for item in items]
-    cache_service.set(
-        cache_key, [item.model_dump() for item in item_responses]
-    )
+    cache_service.set(cache_key, [item.model_dump() for item in item_responses])
 
     return item_responses
 
