@@ -27,8 +27,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install "pydantic[email]"
           python -m pip install pytest pytest-cov
-          python -m pip install -r requirements.txt
-          pip install flake8 pylint bandit pytest black isort mypy
+          python -m pip install flake8 pylint bandit black isort mypy
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run black
         run: black --check --diff --line-length 88 . || true
@@ -55,9 +54,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install "pydantic[email]"
-          python -m pip install -r requirements.txt
-          pip install pytest pytest-cov
+          python -m pip install "pydantic[email]" --force-reinstall
+          python -m pip install pytest pytest-cov
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run pytest with coverage
         run: pytest --verbose --cov=. --cov-report=xml
       - name: Upload coverage to Codecov
@@ -106,8 +105,6 @@ jobs:
       - name: Deploy to test environment
         run: |
           echo "Deploying to test environment..."
-          # 这里可以添加实际的部署命令，例如使用 SSH 连接到测试服务器并运行 Docker Compose
-          # ssh user@test-server "cd /app && docker-compose pull && docker-compose up -d"
 
   deploy-staging:
     needs: build
@@ -118,8 +115,6 @@ jobs:
       - name: Deploy to pre-production environment
         run: |
           echo "Deploying to pre-production environment..."
-          # 这里可以添加实际的部署命令
-          # ssh user@staging-server "cd /app && docker-compose pull && docker-compose up -d"
 
   deploy-production:
     needs: build
@@ -130,8 +125,6 @@ jobs:
       - name: Deploy to production environment
         run: |
           echo "Deploying to production environment..."
-          # 这里可以添加实际的部署命令
-          # ssh user@production-server "cd /app && docker-compose pull && docker-compose up -d"
 
   deploy-hotfix:
     needs: build
@@ -142,8 +135,6 @@ jobs:
       - name: Deploy hotfix to production
         run: |
           echo "Deploying hotfix to production..."
-          # 这里可以添加实际的部署命令
-          # ssh user@production-server "cd /app && docker-compose pull && docker-compose up -d"
 
   clean-up:
     needs: [deploy-test, deploy-staging, deploy-production, deploy-hotfix]
@@ -153,4 +144,3 @@ jobs:
       - name: Clean up
         run: |
           echo "Cleaning up resources..."
-          # 这里可以添加清理命令，例如删除临时文件等
