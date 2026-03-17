@@ -1,0 +1,17 @@
+[MASTER]
+disable=C0114,C0115,C0116,C0330,C0413,W0611,W0613,W0621
+# C0114: missing-module-docstring
+# C0115: missing-class-docstring
+# C0116: missing-function-docstring
+# C0330: bad-continuation
+# C0413: wrong-import-position
+# W0611: unused-import
+# W0613: unused-argument
+# W0621: redefined-outer-name
+
+[BASIC]
+max-line-length=88
+
+[TYPECHECK]
+disable=E0401
+# E0401: import-error
