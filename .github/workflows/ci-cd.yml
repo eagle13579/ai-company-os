@@ -28,7 +28,7 @@ jobs:
           pip install flake8 pylint bandit pytest black isort mypy
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
       - name: Run black
-        run: black --check --diff . || true
+        run: black --check --diff --line-length 88 . || true
       - name: Run isort
         run: isort --check-only . || true
       - name: Run flake8
