@@ -18,6 +18,7 @@ pyyaml
 python-jose[cryptography]
 pydantic-settings
 email-validator
+passlib
 aioredis
 httpx
 types-python-jose
