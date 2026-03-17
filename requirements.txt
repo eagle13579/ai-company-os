@@ -19,3 +19,5 @@ python-jose[cryptography]
 pydantic-settings
 aioredis
 httpx
+types-python-jose
+types-passlib

@@ -17,7 +17,7 @@ class CacheService:
         """获取缓存值"""
         try:
             value = self.redis_client.get(key)
-            if value:
+            if value and isinstance(value, (str, bytes, bytearray)):
                 return json.loads(value)
             return None
         except Exception as e:
@@ -46,7 +46,7 @@ class CacheService:
         """清除缓存"""
         try:
             keys = self.redis_client.keys(pattern)
-            if keys:
+            if keys and isinstance(keys, (list, tuple)):
                 self.redis_client.delete(*keys)
             return True
         except Exception as e:
