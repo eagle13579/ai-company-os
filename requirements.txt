@@ -1,0 +1,28 @@
+# 核心依赖
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+email-validator
+passlib
+python-jose[cryptography]
+sqlalchemy
+psycopg2-binary
+redis
+python-dotenv
+
+# 测试依赖
+pytest
+pytest-cov
+
+# 代码质量工具
+black
+isort
+flake8
+mypy
+pre-commit
+bandit
+
+# 类型提示
+types-python-jose
+types-passlib
