@@ -1,4 +1,4 @@
-const ModelGateway = require('./index');
+import ModelGateway from './index.js';
 
 describe('Authentication', () => {
   let gateway;

@@ -1,4 +1,4 @@
-const CostTracker = require('./cost_tracker');
+import CostTracker from './cost_tracker.js';
 
 describe('CostTracker', () => {
   let costTracker;

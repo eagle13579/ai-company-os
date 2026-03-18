@@ -1,4 +1,4 @@
-const LoadBalancer = require('./load_balancer');
+import LoadBalancer from './load_balancer.js';
 
 describe('LoadBalancer', () => {
   let loadBalancer;

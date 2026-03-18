@@ -1,4 +1,4 @@
-const ModelRouter = require('./model_router');
+import ModelRouter from './model_router.js';
 
 describe('ModelRouter', () => {
   let modelRouter;

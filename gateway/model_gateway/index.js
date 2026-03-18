@@ -1,11 +1,12 @@
 /**
  * ModelGateway class - Main class for model management, routing, and cost tracking
  */
-const ModelRouter = require('./model_router');
-const CostTracker = require('./cost_tracker');
-const LoadBalancer = require('./load_balancer');
-const dotenv = require('dotenv');
-const jwt = require('jsonwebtoken');
+import ModelRouter from './model_router.js';
+import CostTracker from './cost_tracker.js';
+import LoadBalancer from './load_balancer.js';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import LRU from 'lru-cache';
 
 // Load environment variables
 dotenv.config();
@@ -14,10 +15,14 @@ dotenv.config();
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-here';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '24h';
 
+// Cache configuration
+const CACHE_MAX_SIZE = parseInt(process.env.CACHE_MAX_SIZE) || 1000;
+const CACHE_TTL = parseInt(process.env.CACHE_TTL) || 3600000;
+
 /**
  * GatewayError class - Custom error class for consistent error responses
  */
-class GatewayError extends Error {
+export class GatewayError extends Error {
   /**
    * Constructor
    * @param {string} message - Error message
@@ -52,14 +57,14 @@ class GatewayError extends Error {
  * @param {any} details - Additional error details
  * @returns {GatewayError} GatewayError instance
  */
-const errorResponse = (message, statusCode = 500, details = null) => {
+export const errorResponse = (message, statusCode = 500, details = null) => {
   return new GatewayError(message, statusCode, details);
 };
 
 /**
  * ModelGateway class - Main class for model management
  */
-class ModelGateway {
+export default class ModelGateway {
   /**
    * Constructor
    */
@@ -71,18 +76,33 @@ class ModelGateway {
     // Set configuration from environment variables
     this.timeout = parseInt(process.env.MODEL_GATEWAY_TIMEOUT) || 30000;
     this.maxRetries = parseInt(process.env.MODEL_GATEWAY_MAX_RETRIES) || 3;
-    // Initialize cache
-    this.cache = new Map();
+    // Initialize LRU cache
+    this.cache = new LRU({
+      max: CACHE_MAX_SIZE,
+      ttl: CACHE_TTL,
+      updateAgeOnGet: true
+    });
   }
 
   /**
    * Register a model
    * @param {string} modelId - Model ID
    * @param {object} modelConfig - Model configuration
+   * @param {number} weight - Model weight for load balancing
    */
-  registerModel(modelId, modelConfig) {
+  registerModel(modelId, modelConfig, weight = 1) {
     this.modelRouter.registerModel(modelId, modelConfig);
-    this.loadBalancer.registerModel(modelId);
+    this.loadBalancer.registerModel(modelId, weight);
+  }
+
+  /**
+   * Remove a model
+   * @param {string} modelId - Model ID
+   * @returns {boolean} True if model was removed, false otherwise
+   */
+  removeModel(modelId) {
+    this.modelRouter.removeModel(modelId);
+    return this.loadBalancer.removeModel(modelId);
   }
 
   /**
@@ -111,8 +131,8 @@ class ModelGateway {
       }
 
       // Select a healthy model
-      const load = this.loadBalancer.selectModel([modelId]);
-      if (!load) {
+      const selectedModel = this.loadBalancer.selectModel([modelId]);
+      if (!selectedModel) {
         throw errorResponse(`No healthy models available`, 503);
       }
 
@@ -137,7 +157,10 @@ class ModelGateway {
 
           // Calculate and track cost
           const cost = this.calculateCost(modelId, duration, request);
-          this.costTracker.addCost(modelId, cost);
+          this.costTracker.addCost(modelId, cost, {
+            duration,
+            requestSize: JSON.stringify(request).length
+          });
           this.loadBalancer.updateModelLoad(modelId, duration);
           this.loadBalancer.setHealthy(modelId, true);
 
@@ -192,7 +215,26 @@ class ModelGateway {
       models: this.modelRouter.getAllModels(),
       costs: this.costTracker.getAllCosts(),
       load: this.loadBalancer.getModelStats(),
-      totalCost: this.costTracker.getTotalCost()
+      totalCost: this.costTracker.getTotalCost(),
+      cacheStats: {
+        size: this.cache.size,
+        max: this.cache.max
+      }
+    };
+  }
+
+  /**
+   * Get system statistics
+   * @returns {object} System statistics
+   */
+  getSystemStats() {
+    return {
+      memory: process.memoryUsage(),
+      uptime: process.uptime(),
+      cache: {
+        size: this.cache.size,
+        max: this.cache.max
+      }
     };
   }
 
@@ -212,6 +254,22 @@ class ModelGateway {
    */
   setLoadBalancingStrategy(strategy) {
     this.loadBalancer.setStrategy(strategy);
+  }
+
+  /**
+   * Start health checks
+   * @param {function} healthCheckFn - Health check function
+   * @param {number} intervalMs - Interval in milliseconds
+   */
+  startHealthChecks(healthCheckFn, intervalMs = 30000) {
+    this.loadBalancer.startHealthChecks(healthCheckFn, intervalMs);
+  }
+
+  /**
+   * Stop health checks
+   */
+  stopHealthChecks() {
+    this.loadBalancer.stopHealthChecks();
   }
 
   /**
@@ -327,9 +385,8 @@ class ModelGateway {
    * @param {any} value - Cache value
    * @param {number} ttl - Time to live in milliseconds
    */
-  setCache(key, value, ttl = 3600000) { // Default 1 hour
-    const expiration = Date.now() + ttl;
-    this.cache.set(key, { value, expiration });
+  setCache(key, value, ttl = CACHE_TTL) {
+    this.cache.set(key, value, { ttl });
   }
 
   /**
@@ -338,17 +395,7 @@ class ModelGateway {
    * @returns {any} Cached value or null if not found or expired
    */
   getCache(key) {
-    const item = this.cache.get(key);
-    if (!item) {
-      return null;
-    }
-
-    if (Date.now() > item.expiration) {
-      this.cache.delete(key);
-      return null;
-    }
-
-    return item.value;
+    return this.cache.get(key) || null;
   }
 
   /**
@@ -368,12 +415,13 @@ class ModelGateway {
    * @param {number} ttl - Time to live in milliseconds
    * @returns {function} Middleware function
    */
-  cacheMiddleware(ttl = 3600000) {
+  cacheMiddleware(ttl = CACHE_TTL) {
     return (req, res, next) => {
       const key = req.originalUrl || JSON.stringify(req.body);
       const cached = this.getCache(key);
 
       if (cached) {
+        res.set('X-Cache', 'HIT');
         return res.json(cached);
       }
 
@@ -393,7 +441,7 @@ class ModelGateway {
    * @param {number} ttl - Time to live in milliseconds
    * @returns {Promise<any>} Model response
    */
-  async processRequestWithCache(request, ttl = 3600000) {
+  async processRequestWithCache(request, ttl = CACHE_TTL) {
     const cacheKey = JSON.stringify(request);
     const cachedResponse = this.getCache(cacheKey);
 
@@ -406,7 +454,3 @@ class ModelGateway {
     return response;
   }
 }
-
-module.exports = ModelGateway;
-module.exports.GatewayError = GatewayError;
-module.exports.errorResponse = errorResponse;
