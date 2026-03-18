@@ -1,7 +1,7 @@
 /**
  * ModelRouter class - Handles model registration and routing
  */
-class ModelRouter {
+export default class ModelRouter {
   /**
    * Constructor
    */
@@ -19,6 +19,23 @@ class ModelRouter {
    */
   registerModel(modelId, modelConfig) {
     this.models.set(modelId, modelConfig);
+  }
+
+  /**
+   * Remove a model by ID
+   * @param {string} modelId - Model ID to remove
+   * @returns {boolean} True if model was removed, false otherwise
+   */
+  removeModel(modelId) {
+    return this.models.delete(modelId);
+  }
+
+  /**
+   * Clear all models and routing rules
+   */
+  clear() {
+    this.models.clear();
+    this.routingRules = [];
   }
 
   /**
@@ -81,5 +98,3 @@ class ModelRouter {
     return Array.from(this.models.entries()).map(([id, config]) => ({ id, ...config }));
   }
 }
-
-module.exports = ModelRouter;
