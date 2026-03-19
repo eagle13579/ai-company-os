@@ -1,15 +1,15 @@
-# Finance Agent 最佳实践差距分析
+# Data Agent 最佳实践差距分析
 
 ## 分析背景
 
-本报告旨在分析 Finance Agent 与项目中其他 Agent（特别是 Strategy Agent）的最佳实践之间的差距，以识别需要改进的地方。
+本报告旨在分析 Data Agent 与项目中其他 Agent（特别是 Strategy Agent）的最佳实践之间的差距，以识别需要改进的地方。
 
 ## 差距分析
 
 ### 1. 插件系统
 
 **现状**：
-- Finance Agent 没有实现插件系统
+- Data Agent 没有实现插件系统
 - 功能扩展能力有限
 
 **最佳实践**：
@@ -23,7 +23,7 @@
 ### 2. 性能监控
 
 **现状**：
-- Finance Agent 没有记录分析执行时间
+- Data Agent 没有记录分析执行时间
 - 缺乏性能指标
 
 **最佳实践**：
@@ -37,7 +37,7 @@
 ### 3. 数据验证
 
 **现状**：
-- Finance Agent 有基本的输入验证
+- Data Agent 有基本的输入验证
 - 但对具体数据字段的格式验证不足
 
 **最佳实践**：
@@ -51,7 +51,7 @@
 ### 4. 日志记录
 
 **现状**：
-- Finance Agent 在文件内直接创建 logger
+- Data Agent 在文件内直接创建 logger
 - 日志配置与其他 Agent 不一致
 
 **最佳实践**：
@@ -65,7 +65,7 @@
 ### 5. 配置选项
 
 **现状**：
-- Finance Agent 构造函数不接受配置选项
+- Data Agent 构造函数不接受配置选项
 - 缺乏灵活性
 
 **最佳实践**：
@@ -79,7 +79,7 @@
 ### 6. 代码结构
 
 **现状**：
-- Finance Agent 代码结构基本合理
+- Data Agent 代码结构基本合理
 - 但缺乏一些高级特性
 
 **最佳实践**：
@@ -95,7 +95,7 @@
 ### 1. 实现插件系统
 
 ```javascript
-// 在 FinanceAgent 类中添加
+// 在 DataAgent 类中添加
 constructor(options = {}) {
   // 现有代码
   this.options = options;
@@ -115,7 +115,7 @@ registerPlugin(plugin) {
   }
 }
 
-// 在 analyzeFinance 方法中添加插件支持
+// 在 analyzeData 方法中添加插件支持
 const startTime = Date.now();
 try {
   // 现有验证代码
@@ -139,7 +139,7 @@ try {
   });
   
   const endTime = Date.now();
-  logger.info('Finance analysis completed', {
+  logger.info('Data analysis completed', {
     duration: endTime - startTime,
     // 其他日志信息
   });
@@ -147,7 +147,7 @@ try {
   return analysis;
 } catch (error) {
   const endTime = Date.now();
-  logger.error('Finance analysis error', {
+  logger.error('Data analysis error', {
     error: error.message,
     duration: endTime - startTime,
   });
@@ -158,11 +158,11 @@ try {
 ### 2. 添加性能监控
 
 ```javascript
-// 在 analyzeFinance 方法中添加
+// 在 analyzeData 方法中添加
 const startTime = Date.now();
 // 分析逻辑
 const endTime = Date.now();
-logger.info('Finance analysis completed', {
+logger.info('Data analysis completed', {
   duration: endTime - startTime,
   // 其他日志信息
 });
@@ -172,33 +172,33 @@ logger.info('Finance analysis completed', {
 
 ```javascript
 // 在各分析方法中添加详细验证
-analyzePartnership(data) {
+analyzeKeyData(data) {
   try {
     if (!data) {
-      return '需要更多合作结构信息';
+      return '需要更多数据信息';
     }
 
-    if (data.partnership && typeof data.partnership === 'object') {
+    if (data.sources && typeof data.sources === 'object') {
       // 验证具体字段格式
-      if (data.partnership.model && typeof data.partnership.model !== 'string') {
-        logger.warn('Invalid partnership model format, expected string', {
-          actualType: typeof data.partnership.model,
+      if (data.sources.types && !Array.isArray(data.sources.types)) {
+        logger.warn('Invalid sources types format, expected array', {
+          actualType: typeof data.sources.types,
         });
       }
       // 其他字段验证
       
       return {
-        合作模式: data.partnership.model || '需要更多信息',
-        利益分配: data.partnership.profitShare || '需要更多信息',
-        责任划分: data.partnership.responsibilities || '需要更多信息',
-        退出机制: data.partnership.exitStrategy || '需要更多信息',
+        数据来源: data.sources.types || '需要更多信息',
+        数据量: data.sources.volume || '需要更多信息',
+        数据质量: data.sources.quality || '需要更多信息',
+        数据时效性: data.sources.timeliness || '需要更多信息',
       };
     }
 
-    return '需要更多合作结构信息';
+    return '需要更多数据信息';
   } catch (error) {
-    logger.error('Error analyzing partnership:', { error: error.message });
-    return '需要更多合作结构信息';
+    logger.error('Error analyzing key data:', { error: error.message });
+    return '需要更多数据信息';
   }
 }
 ```
@@ -218,14 +218,14 @@ const logger = winston.createLogger({
   ),
   transports: [
     new winston.transports.Console(),
-    new winston.transports.File({ filename: 'finance_agent.log' }),
+    new winston.transports.File({ filename: 'data_agent.log' }),
   ],
 });
 
 module.exports = logger;
 ```
 
-2. 在 `finance_agent.js` 中使用：
+2. 在 `data_agent.js` 中使用：
 
 ```javascript
 const logger = require('./logger');
@@ -235,11 +235,11 @@ const logger = require('./logger');
 
 ```javascript
 constructor(options = {}) {
-  this.role = '全球超级资本天才';
-  this.mission = '用资本结构放大商业价值';
-  this.responsibilities = ['股权设计', '合作结构', '融资策略', '估值路径'];
+  this.role = '全球超级数据天才';
+  this.mission = '让AI公司的一切决策建立在数据之上';
+  this.responsibilities = ['数据采集', '数据分析', '数据建模', '商业洞察', '数据驱动优化'];
   this.analysisModel = {
-    capitalStructure: ['资源', '结构', '资本', '估值'],
+    dataFlow: ['数据来源', '数据分析', '趋势发现', '决策支持'],
   };
   this.options = options;
   this.plugins = [];
@@ -249,12 +249,12 @@ constructor(options = {}) {
 ### 6. 优化代码结构
 
 - 提取重复的验证逻辑为公共方法
-- 模块化处理不同类型的财务分析
+- 模块化处理不同类型的数据分析
 - 保持与其他 Agent 一致的代码风格
 
 ## 总结
 
-Finance Agent 已经实现了基本功能，但与最佳实践相比，还存在以下差距：
+Data Agent 已经实现了基本功能，但与最佳实践相比，还存在以下差距：
 
 1. **插件系统**：缺乏模块化扩展能力
 2. **性能监控**：缺乏执行时间记录
@@ -263,4 +263,4 @@ Finance Agent 已经实现了基本功能，但与最佳实践相比，还存在
 5. **配置选项**：缺乏构造函数配置
 6. **代码结构**：可以进一步优化模块化设计
 
-通过实施上述改进建议，Finance Agent 将更加符合项目的最佳实践，提高可维护性、可扩展性和性能。
+通过实施上述改进建议，Data Agent 将更加符合项目的最佳实践，提高可维护性、可扩展性和性能。
