@@ -1,0 +1,16 @@
+{
+  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "commonjs"
+  },
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "prettier/prettier": "error",
+    "no-console": "warn"
+  },
+  "ignorePatterns": ["gateway/**", "node_modules/**"]
+}
