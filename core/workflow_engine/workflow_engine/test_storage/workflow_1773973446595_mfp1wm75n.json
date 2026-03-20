@@ -1,0 +1,23 @@
+{
+  "id": "workflow_1773973446595_mfp1wm75n",
+  "name": "concurrent-workflow-1",
+  "steps": [
+    {
+      "id": "concurrent-step-1",
+      "type": "asyncFunction",
+      "status": "completed",
+      "result": {
+        "result": "Concurrent workflow 1 completed"
+      },
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:24:06.595Z",
+  "startedAt": "2026-03-20T02:24:06.602Z",
+  "completedAt": "2026-03-20T02:24:07.145Z",
+  "executedSteps": [
+    "concurrent-step-1"
+  ]
+}

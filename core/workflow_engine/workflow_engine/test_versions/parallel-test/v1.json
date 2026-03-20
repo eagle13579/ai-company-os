@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "workflowName": "parallel-test",
+  "definition": {
+    "name": "parallel-test",
+    "steps": [
+      {
+        "id": "parallel-group",
+        "type": "parallel",
+        "steps": [
+          {
+            "id": "parallel-step0",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step1",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step2",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step3",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step4",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step5",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step6",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step7",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step8",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step9",
+            "type": "function"
+          }
+        ]
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:24:06.048Z"
+}

@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "workflowName": "test-parallel",
+  "definition": {
+    "name": "test-parallel",
+    "steps": [
+      {
+        "id": "parallel1",
+        "type": "parallel",
+        "steps": [
+          {
+            "id": "parallel-step1",
+            "type": "function"
+          },
+          {
+            "id": "parallel-step2",
+            "type": "function"
+          }
+        ]
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:16:13.093Z"
+}

@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446188_pezpc6p85",
+  "name": "test-workflow-37",
+  "steps": [
+    {
+      "id": "test-step-37",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.188Z",
+  "startedAt": null,
+  "completedAt": null
+}

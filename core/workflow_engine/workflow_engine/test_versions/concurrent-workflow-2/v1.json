@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "workflowName": "concurrent-workflow-2",
+  "definition": {
+    "name": "concurrent-workflow-2",
+    "steps": [
+      {
+        "id": "concurrent-step-2",
+        "type": "asyncFunction",
+        "func": "async (params) => {\n          await new Promise(resolve => setTimeout(resolve, 500));\n          return { result: `Concurrent workflow ${i} completed` };\n        }"
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:24:06.596Z"
+}

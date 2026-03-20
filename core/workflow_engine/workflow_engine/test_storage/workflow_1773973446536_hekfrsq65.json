@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446536_hekfrsq65",
+  "name": "test-workflow-88",
+  "steps": [
+    {
+      "id": "test-step-88",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.536Z",
+  "startedAt": null,
+  "completedAt": null
+}

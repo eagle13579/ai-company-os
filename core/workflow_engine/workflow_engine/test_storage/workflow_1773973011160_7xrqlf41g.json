@@ -1,0 +1,34 @@
+{
+  "id": "workflow_1773973011160_7xrqlf41g",
+  "name": "test-workflow",
+  "steps": [
+    {
+      "id": "step1",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 1 completed"
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step2",
+      "type": "asyncFunction",
+      "status": "completed",
+      "result": {
+        "result": "Step 2 completed"
+      },
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:16:51.160Z",
+  "startedAt": "2026-03-20T02:16:51.163Z",
+  "completedAt": "2026-03-20T02:16:51.287Z",
+  "executedSteps": [
+    "step1",
+    "step2"
+  ]
+}
