@@ -1,0 +1,30 @@
+{
+  "id": "workflow_1773972897920_zlhczcu80",
+  "name": "test-parallel",
+  "steps": [
+    {
+      "id": "parallel1",
+      "type": "parallel",
+      "steps": [
+        {
+          "id": "parallel-step1",
+          "type": "function"
+        },
+        {
+          "id": "parallel-step2",
+          "type": "function"
+        }
+      ],
+      "status": "failed",
+      "error": "Step parallel-step1 not found in workflow workflow_1773972897920_zlhczcu80",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "failed",
+  "createdAt": "2026-03-20T02:14:57.920Z",
+  "startedAt": "2026-03-20T02:14:57.923Z",
+  "completedAt": null,
+  "executedSteps": [],
+  "error": "Step parallel-step1 not found in workflow workflow_1773972897920_zlhczcu80"
+}

@@ -1,0 +1,11 @@
+{
+  "totalWorkflows": 139,
+  "completedWorkflows": 14,
+  "failedWorkflows": 1,
+  "runningWorkflows": 0,
+  "averageExecutionTime": 0,
+  "successRate": 93.33333333333333,
+  "totalSteps": 28,
+  "completedSteps": 27,
+  "failedSteps": 1
+}

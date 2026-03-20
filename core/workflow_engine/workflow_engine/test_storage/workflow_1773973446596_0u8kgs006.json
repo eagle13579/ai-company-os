@@ -1,0 +1,23 @@
+{
+  "id": "workflow_1773973446596_0u8kgs006",
+  "name": "concurrent-workflow-2",
+  "steps": [
+    {
+      "id": "concurrent-step-2",
+      "type": "asyncFunction",
+      "status": "completed",
+      "result": {
+        "result": "Concurrent workflow 2 completed"
+      },
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:24:06.596Z",
+  "startedAt": "2026-03-20T02:24:06.603Z",
+  "completedAt": "2026-03-20T02:24:07.152Z",
+  "executedSteps": [
+    "concurrent-step-2"
+  ]
+}

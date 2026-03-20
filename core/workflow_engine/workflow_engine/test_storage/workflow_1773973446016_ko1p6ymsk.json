@@ -1,0 +1,132 @@
+{
+  "id": "workflow_1773973446016_ko1p6ymsk",
+  "name": "sequential-test",
+  "steps": [
+    {
+      "id": "step0",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 0 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step1",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 1 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step2",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 2 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step3",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 3 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step4",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 4 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step5",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 5 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step6",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 6 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step7",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 7 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step8",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 8 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    },
+    {
+      "id": "step9",
+      "type": "function",
+      "status": "completed",
+      "result": {
+        "result": "Step 9 completed",
+        "sum": 4999950000
+      },
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:24:06.017Z",
+  "startedAt": "2026-03-20T02:24:06.020Z",
+  "completedAt": "2026-03-20T02:24:06.046Z",
+  "executedSteps": [
+    "step0",
+    "step1",
+    "step2",
+    "step3",
+    "step4",
+    "step5",
+    "step6",
+    "step7",
+    "step8",
+    "step9"
+  ]
+}
