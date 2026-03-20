@@ -1,0 +1,38 @@
+{
+  "id": "workflow_1773972973094_iqxks81x7",
+  "name": "test-parallel",
+  "steps": [
+    {
+      "id": "parallel1",
+      "type": "parallel",
+      "steps": [
+        {
+          "id": "parallel-step1",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 1 completed"
+          }
+        },
+        {
+          "id": "parallel-step2",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 2 completed"
+          }
+        }
+      ],
+      "status": "completed",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:16:13.094Z",
+  "startedAt": "2026-03-20T02:16:13.103Z",
+  "completedAt": "2026-03-20T02:16:13.117Z",
+  "executedSteps": [
+    "parallel1"
+  ]
+}

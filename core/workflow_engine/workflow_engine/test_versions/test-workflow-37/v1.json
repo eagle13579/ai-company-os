@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "workflowName": "test-workflow-37",
+  "definition": {
+    "name": "test-workflow-37",
+    "steps": [
+      {
+        "id": "test-step-37",
+        "type": "function",
+        "func": "(params) => {\n          return { result: 'Test completed' };\n        }"
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:24:06.187Z"
+}

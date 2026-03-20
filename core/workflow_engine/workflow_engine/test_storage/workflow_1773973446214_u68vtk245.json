@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446214_u68vtk245",
+  "name": "test-workflow-49",
+  "steps": [
+    {
+      "id": "test-step-49",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.214Z",
+  "startedAt": null,
+  "completedAt": null
+}

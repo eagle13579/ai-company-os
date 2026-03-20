@@ -1,0 +1,112 @@
+{
+  "id": "workflow_1773973446056_t0mwen9xc",
+  "name": "parallel-test",
+  "steps": [
+    {
+      "id": "parallel-group",
+      "type": "parallel",
+      "steps": [
+        {
+          "id": "parallel-step0",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 0 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step1",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 1 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step2",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 2 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step3",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 3 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step4",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 4 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step5",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 5 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step6",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 6 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step7",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 7 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step8",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 8 completed",
+            "sum": 4999950000
+          }
+        },
+        {
+          "id": "parallel-step9",
+          "type": "function",
+          "status": "completed",
+          "result": {
+            "result": "Parallel step 9 completed",
+            "sum": 4999950000
+          }
+        }
+      ],
+      "status": "completed",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "completed",
+  "createdAt": "2026-03-20T02:24:06.057Z",
+  "startedAt": "2026-03-20T02:24:06.059Z",
+  "completedAt": "2026-03-20T02:24:06.077Z",
+  "executedSteps": [
+    "parallel-group"
+  ]
+}

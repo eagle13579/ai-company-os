@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "workflowName": "test-workflow",
+  "definition": {
+    "name": "test-workflow",
+    "steps": [
+      {
+        "id": "step1",
+        "type": "function",
+        "func": "(params) => {\n        return { result: 'Step 1 completed' };\n      }"
+      },
+      {
+        "id": "step2",
+        "type": "asyncFunction",
+        "func": "async (params) => {\n        await new Promise(resolve => setTimeout(resolve, 100));\n        return { result: 'Step 2 completed' };\n      }"
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:14:57.776Z"
+}

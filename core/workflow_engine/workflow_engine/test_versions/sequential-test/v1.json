@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "workflowName": "sequential-test",
+  "definition": {
+    "name": "sequential-test",
+    "steps": [
+      {
+        "id": "step0",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step1",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step2",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step3",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step4",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step5",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step6",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step7",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step8",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      },
+      {
+        "id": "step9",
+        "type": "function",
+        "func": "(params) => {\n        // 模拟一些计算\n        let sum = 0;\n        for (let j = 0; j < 100000; j++) {\n          sum += j;\n        }\n        return { result: `Step ${i} completed`, sum };\n      }"
+      }
+    ]
+  },
+  "createdAt": "2026-03-20T02:24:06.014Z"
+}

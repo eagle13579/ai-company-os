@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446095_lr6gvkh04",
+  "name": "test-workflow-4",
+  "steps": [
+    {
+      "id": "test-step-4",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.095Z",
+  "startedAt": null,
+  "completedAt": null
+}

@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446200_ms362hxoz",
+  "name": "test-workflow-42",
+  "steps": [
+    {
+      "id": "test-step-42",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.200Z",
+  "startedAt": null,
+  "completedAt": null
+}

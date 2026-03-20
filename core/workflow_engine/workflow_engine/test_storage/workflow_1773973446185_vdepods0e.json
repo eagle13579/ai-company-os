@@ -1,0 +1,17 @@
+{
+  "id": "workflow_1773973446185_vdepods0e",
+  "name": "test-workflow-35",
+  "steps": [
+    {
+      "id": "test-step-35",
+      "type": "function",
+      "status": "pending",
+      "startTime": null,
+      "endTime": null
+    }
+  ],
+  "status": "created",
+  "createdAt": "2026-03-20T02:24:06.185Z",
+  "startedAt": null,
+  "completedAt": null
+}
