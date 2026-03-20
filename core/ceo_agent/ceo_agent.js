@@ -2,12 +2,18 @@ const { Logger, ErrorHandler, Validator, Utils } = require('./utils/utils');
 const IPlanner = require('./interfaces/IPlanner');
 const IDecisionEngine = require('./interfaces/IDecisionEngine');
 const IReviewEngine = require('./interfaces/IReviewEngine');
+const RiskManager = require('./risk_manager');
+const TalentManager = require('./talent_manager');
+const StakeholderManager = require('./stakeholder_manager');
 
 class CEOAgent {
   constructor() {
     this.planner = null;
     this.decisionEngine = null;
     this.reviewEngine = null;
+    this.riskManager = new RiskManager();
+    this.talentManager = new TalentManager();
+    this.stakeholderManager = new StakeholderManager();
   }
 
   setPlanner(planner) {
@@ -192,6 +198,10 @@ class CEOAgent {
       const strategy = await this.strategicPlanning(goals, constraints);
       if (strategy.status === 'failed') return strategy;
 
+      // 风险评估
+      const riskAssessment = await this.assessRisks(strategy);
+      if (riskAssessment.status === 'failed') return riskAssessment;
+
       const tasks = await this.taskBreakdown(strategy);
       if (tasks.status === 'failed') return tasks;
 
@@ -199,19 +209,40 @@ class CEOAgent {
       if (allocation.status === 'failed') return allocation;
 
       const plan = {
+        id: strategy.id,
         strategy,
         tasks,
         allocation,
+        riskAssessment,
       };
 
       const results = await this.executePlan(plan);
       const review = await this.reviewResults(results);
 
+      // 人才管理
+      const talentAssessment = await this.assessTalent(resources);
+      if (talentAssessment.status === 'failed') return talentAssessment;
+      
+      const developmentPlan = await this.createDevelopmentPlan(talentAssessment);
+      if (developmentPlan.status === 'failed') return developmentPlan;
+
+      // 利益相关者管理
+      const stakeholderAnalysis = await this.analyzeStakeholders();
+      if (stakeholderAnalysis.status === 'failed') return stakeholderAnalysis;
+      
+      const communicationPlan = await this.createCommunicationPlan(stakeholderAnalysis);
+      if (communicationPlan.status === 'failed') return communicationPlan;
+
       const result = {
+        status: 'success',
         plan,
         results,
         review,
-        status: 'completed',
+        riskAssessment,
+        talentAssessment,
+        developmentPlan,
+        stakeholderAnalysis,
+        communicationPlan,
       };
 
       Logger.info('Strategy run completed successfully', {
@@ -219,7 +250,104 @@ class CEOAgent {
       });
       return result;
     } catch (error) {
+      Logger.error('Strategy run failed', error);
       return ErrorHandler.handleError(error, { action: 'runStrategy' });
+    }
+  }
+
+  async assessRisks(strategy) {
+    try {
+      Logger.info('Assessing risks for strategy', { strategyId: strategy.id });
+      const riskAssessment = await this.riskManager.assessRisks(strategy);
+      const mitigationPlan = await this.riskManager.developMitigationPlan(riskAssessment.risks);
+      
+      return {
+        status: 'success',
+        riskAssessment,
+        mitigationPlan
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'assessRisks' });
+    }
+  }
+
+  async assessTalent(resources) {
+    try {
+      Logger.info('Assessing talent', { resourceCount: resources.length });
+      const talentAssessment = await this.talentManager.assessTalent(resources);
+      
+      return {
+        status: 'success',
+        talentAssessment
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'assessTalent' });
+    }
+  }
+
+  async createDevelopmentPlan(talentAssessment) {
+    try {
+      Logger.info('Creating development plan');
+      const developmentPlan = await this.talentManager.createDevelopmentPlan(talentAssessment.talentAssessment);
+      
+      return {
+        status: 'success',
+        developmentPlan
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'createDevelopmentPlan' });
+    }
+  }
+
+  async analyzeStakeholders() {
+    try {
+      Logger.info('Analyzing stakeholders');
+      const stakeholderAnalysis = await this.stakeholderManager.analyzeStakeholders();
+      
+      return {
+        status: 'success',
+        stakeholderAnalysis
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'analyzeStakeholders' });
+    }
+  }
+
+  async createCommunicationPlan(stakeholderAnalysis) {
+    try {
+      Logger.info('Creating communication plan');
+      const communicationPlan = await this.stakeholderManager.createCommunicationPlan(stakeholderAnalysis.stakeholderAnalysis);
+      
+      return {
+        status: 'success',
+        communicationPlan
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'createCommunicationPlan' });
+    }
+  }
+
+  async getDashboard() {
+    try {
+      Logger.info('Generating dashboard');
+      
+      return {
+        status: 'success',
+        dashboard: {
+          riskManager: {
+            totalRisks: this.riskManager.risks?.length || 0
+          },
+          talentManager: {
+            totalAssessments: this.talentManager.talentAssessments?.length || 0
+          },
+          stakeholderManager: {
+            totalStakeholders: this.stakeholderManager.stakeholders?.length || 0
+          },
+          generatedAt: new Date().toISOString()
+        }
+      };
+    } catch (error) {
+      return ErrorHandler.handleError(error, { action: 'getDashboard' });
     }
   }
 }
